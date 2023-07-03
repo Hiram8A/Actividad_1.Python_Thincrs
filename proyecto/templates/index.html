@@ -1,0 +1,116 @@
+{% load bootstrap4 %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+  <head>
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+
+    <style>
+      .titulo{
+        background-color: #19568a;
+        border-radius: 20px;
+        padding: 10px;
+        font-family: arial;
+      }
+      h1{
+        color:whitesmoke;
+        font-size: xxx-large;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- encabezado -->
+    <div class="titulo" align="center">
+      <h1>Productos</h1>
+    </div>
+    
+    
+    
+    <!-- contenido -->
+    {% block content %}
+    <div align="center">
+      <div style="width: 70%;">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">
+                    #
+                  </th>
+                <th scope="col">
+                  Nombre
+                </th>
+                <th scope="col">
+                  Descripcion
+                </th>
+                <th scope="col">
+                  Precio ($)
+                </th>
+
+                <th scope="col">
+                  Fecha de Registro
+                </th>
+
+                <th scope="col">
+                  Estatus (True/False)
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+                {% for producto in productos %}
+                <tr>
+                <td scope="row">
+                    {{ producto.pk }}
+                </td>
+                <td>
+                    {{ producto.nombre }}
+                </td>
+                <td>
+                    {{ producto.descripcion }}
+                </td>
+                <td>
+                    {{ producto.precio }}
+                </td>
+                <td>
+                    {{ producto.fecha_registro }}
+                </td>
+                <td>
+                    {{ producto.estatus }}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <!-- Formulario -->
+        <br>
+        <br>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="{{ form.nombre.id_for_label }}">nombre</label>
+              {{ form.nombre|add_class:"form-control" }}
+
+              <label for="{{ form.precio.id_for_label }}">precio</label>
+              {{ form.precio|add_class:"form-control" }}
+
+              <label for="{{ form.descripcion.id_for_label }}">descripcion</label>
+              {{ form.descripcion|add_class:"form-control" }}
+
+              <label for="{{ form.fecha_registro.id_for_label }}">fecha_registro</label>
+              {{ form.fecha_registro|add_class:"form-control" }}
+
+              <label for="{{ form.estatus.id_for_label }}">estatus</label>
+              {{ form.estatus|add_class:"form-control" }}
+
+            </div>
+            <button class="btn btn-primary" type="submit">Guardar</button>
+          </form>
+
+
+
+      </div>
+    </div>
+    {% endblock %}
+
+  </body>
+</html>
