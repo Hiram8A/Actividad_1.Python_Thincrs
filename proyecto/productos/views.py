@@ -11,7 +11,7 @@ def index(request):
     return HttpResponse("Hola mundo")
 
 class Inicio(View):
-    template_name = 'index.html'
+    template_name = 'productos.html'
 
     def post(self,request):
         form = ProductoForm(request.POST)

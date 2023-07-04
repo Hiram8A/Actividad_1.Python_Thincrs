@@ -10,8 +10,8 @@ class Productos(models.Model):
 
     nombre = models.CharField("nombre", max_length=300, default="Sin nombrar")
     descripcion = models.CharField("descripcion", max_length=300, default="Sin especificar")
-    precio = models.IntegerField("precio",  default=0)
-    fecha_registro = models.IntegerField("fecha_registro",  default=2023)
+    precio = models.DecimalField("precio",  default=0,max_digits=6, decimal_places=2)
+    fecha_registro = models.DateField("fecha_registro", auto_now_add=False, default="YYYY-MM-DD")
     estatus = models.BooleanField("estatus",  blank=False)
     
     def _str_(self):

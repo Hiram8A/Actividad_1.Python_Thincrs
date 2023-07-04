@@ -8,7 +8,7 @@
     <style>
       .titulo{
         background-color: #19568a;
-        border-radius: 20px;
+        border-radius: 30px;
         padding: 10px;
         font-family: arial;
       }
@@ -24,8 +24,6 @@
       <h1>Productos</h1>
     </div>
     
-    
-    
     <!-- contenido -->
     {% block content %}
     <div align="center">
@@ -34,8 +32,8 @@
             <thead>
               <tr>
                 <th scope="col">
-                    #
-                  </th>
+                  #
+                </th>
                 <th scope="col">
                   Nombre
                 </th>
@@ -45,13 +43,11 @@
                 <th scope="col">
                   Precio ($)
                 </th>
-
                 <th scope="col">
                   Fecha de Registro
                 </th>
-
                 <th scope="col">
-                  Estatus (True/False)
+                  Estatus
                 </th>
               </tr>
             </thead>
@@ -75,7 +71,11 @@
                     {{ producto.fecha_registro }}
                 </td>
                 <td>
-                    {{ producto.estatus }}
+                  {% if producto.estatus %}
+                      <p>Disponible</p>
+                  {% else %}
+                      <p>No disponible</p>
+                  {% endif %}
                 </tr>
                 {% endfor %}
             </tbody>
@@ -83,34 +83,32 @@
         <!-- Formulario -->
         <br>
         <br>
+        <br>
 
         <form method="post">
             {% csrf_token %}
             <div class="form-group">
-              <label for="{{ form.nombre.id_for_label }}">nombre</label>
+              <label for="{{ form.nombre.id_for_label }}">Nombre</label>
               {{ form.nombre|add_class:"form-control" }}
 
-              <label for="{{ form.precio.id_for_label }}">precio</label>
+              <label for="{{ form.precio.id_for_label }}">Precio</label>
               {{ form.precio|add_class:"form-control" }}
 
-              <label for="{{ form.descripcion.id_for_label }}">descripcion</label>
+              <label for="{{ form.descripcion.id_for_label }}">Descripcion</label>
               {{ form.descripcion|add_class:"form-control" }}
 
-              <label for="{{ form.fecha_registro.id_for_label }}">fecha_registro</label>
+              <label for="{{ form.fecha_registro.id_for_label }}">Fecha de Registro</label>
               {{ form.fecha_registro|add_class:"form-control" }}
 
-              <label for="{{ form.estatus.id_for_label }}">estatus</label>
+              <label for="{{ form.estatus.id_for_label }}">Estatus</label>
               {{ form.estatus|add_class:"form-control" }}
 
             </div>
             <button class="btn btn-primary" type="submit">Guardar</button>
           </form>
 
-
-
       </div>
     </div>
     {% endblock %}
-
   </body>
 </html>
