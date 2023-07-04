@@ -14,6 +14,19 @@ class Inicio(View):
     template_name = 'productos.html'
 
     def post(self,request):
+
+        return render(request,self.template_name)
+
+
+    def get(self,request):
+        productos = Productos.objects.all()
+
+        return render(request,self.template_name,{'productos':productos})
+    
+class Formulario(View):
+    template_name = 'formulario.html'
+    
+    def post(self,request):
         form = ProductoForm(request.POST)
         
         if form.is_valid():
@@ -22,17 +35,16 @@ class Inicio(View):
         
         #else:
         #    JsonResponse("Se ha presentado un error")
-        
+            
         return render(request,self.template_name,{'form': form})
 
     def get(self,request):
-        '''Esta es mi clase GET'''
+
         productos = Productos.objects.all()
         form = ProductoForm()
-        #print('Ha iniciado GET --------------------------')
 
-        return render(request,self.template_name,{'form': form,'productos':productos})
-    
+        return render(request,self.template_name,{'form':form})
+
 def insertar_producto(request):
     nuevo_producto = Productos(
         nombre = "Mazapan",

@@ -1,0 +1,60 @@
+{% load bootstrap4 %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+  <head>
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+
+    <style>
+      .titulo{
+        background-color: #19568a;
+        border-radius: 30px;
+        padding: 10px;
+        font-family: arial;
+      }
+      h1{
+        color:whitesmoke;
+        font-size: xxx-large;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- encabezado -->
+    <div class="titulo" align="center">
+      <h1>Formulario Productos</h1>
+    </div>
+        
+        {% block content %}
+        <!-- Formulario -->
+        <div align="center">
+            <div style="width: 70%;">
+            <br>
+            <br>
+            <br>
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                <label for="{{ form.nombre.id_for_label }}">Nombre</label>
+                {{ form.nombre|add_class:"form-control" }}
+
+                <label for="{{ form.precio.id_for_label }}">Precio</label>
+                {{ form.precio|add_class:"form-control" }}
+
+                <label for="{{ form.descripcion.id_for_label }}">Descripcion</label>
+                {{ form.descripcion|add_class:"form-control" }}
+
+                <label for="{{ form.fecha_registro.id_for_label }}">Fecha de Registro</label>
+                {{ form.fecha_registro|add_class:"form-control" }}
+
+                <label for="{{ form.estatus.id_for_label }}">Estatus</label>
+                {{ form.estatus|add_class:"form-control" }}
+
+                </div>
+                <button class="btn btn-primary" type="submit">Guardar</button>
+            </form>
+            </div>
+        </div>
+    {% endblock %}
+  </body>
+</html>
