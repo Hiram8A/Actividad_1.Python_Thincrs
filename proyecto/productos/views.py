@@ -1,6 +1,6 @@
 from django.http import HttpResponse, JsonResponse
 from django.views import View
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import Productos 
 from .forms import ProductoForm
@@ -50,9 +50,14 @@ def insertar_producto(request):
         nombre = "Mazapan",
         descripcion = "Dulce de cacahuate",
         precio = 5,
-        estatus = "True"
+        estatus = "True" 
     )
     nuevo_producto.save()
 
     return HttpResponse("Producto Insertado Correctamente")
 
+class Eliminar_Productos(View):
+    def post(self, request, producto_id):
+        producto = get_object_or_404(Productos, pk=producto_id)
+        producto.delete()
+        return redirect('home')

@@ -1,9 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
 {% load bootstrap4 %}
 {% load widget_tweaks %}
 <!DOCTYPE html>
   <head>
     {% bootstrap_css %}
     {% bootstrap_javascript %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <style>
       .titulo{
@@ -11,21 +14,27 @@
         border-radius: 30px;
         padding: 10px;
         font-family: arial;
+        margin-left: 10%;
+        margin-right: 10%;
       }
+
       h1{
         color:whitesmoke;
         font-size: xxx-large;
       }
+
     </style>
   </head>
+
+  <br>
+
   <body>
     <!-- encabezado -->
-    <div class="titulo" align="center">
+    <div class="titulo" align="center" >
       <h1>Productos</h1>
     </div>
     
     <!-- contenido -->
-    {% block content %}
     <div align="center">
       <div style="width: 70%;">
         <table class="table">
@@ -48,6 +57,9 @@
                 </th>
                 <th scope="col">
                   Estatus
+                </th>
+                <th scope="col">
+                  Acciones
                 </th>
               </tr>
             </thead>
@@ -76,6 +88,28 @@
                   {% else %}
                       <p>No disponible</p>
                   {% endif %}
+                </td>
+                  
+                <td>
+                  <form method="post" id="form-eliminar" class="form-eliminar" action="{% url 'eliminar_producto' producto.pk %}">
+                    {% csrf_token%}
+                    <input type="hidden" name="producto_id" value="{{ producto.pk }}">
+                    <button type="button" class="btn btn-danger" id="btn-confirmar-eliminar-{{ producto.pk }}">Eliminar</button>
+                    
+                    <div class="dropdown" id="dropdown-confirmacion-{{ producto.pk }}" style="display: none;">
+                      <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Confirmar eliminacion
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <button class="dropdown-item" type="submit">Si, deseo eliminar</button>
+                        <button class="dropdown-item" type="button" id="btn-cancelar-eliminar-{{ producto.pk }}">Cancelar</button>
+                      </div>
+                    </div>
+
+                    </form>
+                </td>
+
+
                 </tr>
                 {% endfor %}
             </tbody>
@@ -83,6 +117,28 @@
 
       </div>
     </div>
-    {% endblock %}
+
+    <script>
+      // Muestra Menú Despegable
+      $(document).ready(function(){
+
+        $('[id^="btn-confirmar-eliminar"]').click(function(){
+          var div_Id = $(this).attr('id').split('-')[3];
+
+          $('#dropdown-confirmacion-' + div_Id).show();
+         });   
+      
+      // Cancela la eliminación
+        $('[id^="btn-cancelar-eliminar"]').click(function(){
+          var div_Id = $(this).attr('id').split('-')[3];
+            $('#dropdown-confirmacion-' + div_Id).hide();
+        });
+      });
+
+    </script>
+
+
+
   </body>
 </html>
+{% endblock %}
