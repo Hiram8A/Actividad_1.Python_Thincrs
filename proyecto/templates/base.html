@@ -28,6 +28,9 @@
                         <li class="nav-item">
                             <a class="nav-link"  href="{% url 'formulario' %}">Formulario<a>
                         </li> 
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'estadisticas_productos' %}">Estadisticas<a>
+                        </li> 
                         
                         <!-- Login & Logout con respectiva autenticacion -->
                         {% if user.is_authenticated %}
