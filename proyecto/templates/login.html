@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1> Login</h1>
+
+{% if messages %}
+<!-- Bloque de Mensajes-->
+<ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tag %} class="{{ message.tags }}" {% endif %}> {{ message }} </li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<!-- Formulario de Login-->
+<form method="post">
+    {% csrf_token %}
+    <label for="username">Username</label>
+    <input type="text" name="username" id="username" required>
+    
+    <br>
+    
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password">
+    
+    <br>
+    
+    <input type="submit" value="Login">
+</form>
+
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load bootstrap4 %}
+{% load widget_tweaks %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Estadistica de Productos</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1" >
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+
+        <style>
+            .titulo{
+              background-color: #19568a;
+              border-radius: 30px;
+              padding: 10px;
+              font-family: arial;
+              margin-left: 10%;
+              margin-right: 10%;
+            }
+      
+            h1{
+              color:whitesmoke;
+              font-size: xxx-large;
+            }
+      
+          </style>
+    </head>
+
+    <body>
+        <!-- Contenedor Principal con Margen Superior -->
+        <div class="container mt-4">
+            <!-- Fila-->
+            <div class="row">
+                <!-- Columna Centrada Disp Medianos (width screen >= 768)-->
+                <div class="col-md-8 offset-md-2">
+                    <div class="titulo" align="center" >
+                        <h1> Estadísticas de Productos </h1>
+                    </div>
+
+                    <br>
+
+                    <!-- Div Centrado con margenes inferiores-->
+                    <div class="text-center mb-3">
+                        
+                        <p>Total de Productos Disponibles: {{ total_productos }}</p>
+
+
+                        <p>Promedio de Precios {{ promedio_precio }}</p>
+
+                        <p>Fecha más reciente de producto registrado: {{ max_fecha_registro }}</p>
+
+                        <!-- Contenedor para el Gráfico-->
+                        <div style="height: 400px;">
+                            
+                        <canvas id="miGrafico"></canvas>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- JavaSript Creacion y Configuracion del Grafico -->
+        <script>
+            // Datos para el Gráfico
+            var datos = {
+                labels: ["Total de Productos Disponibles", "Promedio de Precios"],
+                //labels: ["Total de Productos Disponibles", "Fecha más reciente de producto registrado", "Promedio de Precios"],
+                datasets: [{
+                    label: "Estadísticas de Productos",
+                    backgroundColor: ["blue", "green"],
+                    //backgroundColor: ["red", "blue", "green"],
+                    data: [{{ total_productos }},  {{ promedio_precio }}]
+                    //data: [{{ total_productos }}, {{ max_fecha_registro }}, {{ promedio_precio }}]
+                }]
+            };
+            
+            // Configuración del gráfico
+            var opciones = {
+                responsive: true,
+                maintainAspectRatio: false
+            };
+    
+            // Crear el gráfico
+            var ctx = document.getElementById("miGrafico").getContext("2d")
+            var miGrafico = new Chart(ctx, {
+                type: 'bar',  // Tipo de gráfico (ejemplo: 'line', 'pie', 'doughnut', etc.)
+                data: datos,
+                options: opciones
+            });
+        </script>     
+    </body>
+</html>
+{% endblock %}
